@@ -23,6 +23,7 @@ export default async function callback(params: {
     adapter,
     url,
     callbackUrl,
+    registering,
     pages,
     jwt,
     events,
@@ -94,6 +95,7 @@ export default async function callback(params: {
             // @ts-expect-error
             account,
             profile: OAuthProfile,
+            registering
           })
           if (!isAllowed) {
             return { redirect: `${url}/error?error=AccessDenied`, cookies }

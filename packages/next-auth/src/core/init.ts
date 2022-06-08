@@ -19,6 +19,7 @@ interface InitParams {
   action: InternalOptions["action"]
   /** Callback URL value extracted from the incoming request. */
   callbackUrl?: string
+  registering?: boolean
   /** CSRF token value extracted from the incoming request. From body if POST, from query if GET */
   csrfToken?: string
   /** Is the incoming request a POST request? */
@@ -34,6 +35,7 @@ export async function init({
   host,
   cookies: reqCookies,
   callbackUrl: reqCallbackUrl,
+  registering = false,
   csrfToken: reqCsrfToken,
   isPost,
 }: InitParams): Promise<{
@@ -101,6 +103,7 @@ export async function init({
     callbacks: { ...defaultCallbacks, ...userOptions.callbacks },
     logger,
     callbackUrl: url.origin,
+    registering: Boolean(registering)
   }
 
   // Init cookies

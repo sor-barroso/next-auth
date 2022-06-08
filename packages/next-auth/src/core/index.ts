@@ -75,6 +75,7 @@ export async function NextAuthHandler<
     providerId,
     host: req.host,
     callbackUrl: req.body?.callbackUrl ?? req.query?.callbackUrl,
+    registering: req.body?.registering ?? req.query?.registering,
     csrfToken: req.body?.csrfToken,
     cookies: req.cookies,
     isPost: method === "POST",
@@ -107,7 +108,7 @@ export async function NextAuthHandler<
         if (pages.signIn) {
           let signinUrl = `${pages.signIn}${
             pages.signIn.includes("?") ? "&" : "?"
-          }callbackUrl=${encodeURIComponent(options.callbackUrl)}`
+          }callbackUrl=${encodeURIComponent(options.callbackUrl)}&registering=${options.registering}`
           if (error) signinUrl = `${signinUrl}&error=${encodeURIComponent(error)}`
           return { redirect: signinUrl, cookies }
         }
