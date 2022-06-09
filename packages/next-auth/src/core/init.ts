@@ -20,6 +20,7 @@ interface InitParams {
   action: InternalOptions["action"]
   /** Callback URL value extracted from the incoming request. */
   callbackUrl?: string
+  /** Registering value extracted from the incoming request. */
   registering?: string
   /** CSRF token value extracted from the incoming request. From body if POST, from query if GET */
   csrfToken?: string

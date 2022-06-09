@@ -280,6 +280,8 @@ export interface CallbacksOptions<
     }
     /** If Credentials provider is used, it contains the user credentials */
     credentials?: Record<string, CredentialInput>
+
+    /** Flag used to track a call if it is from a registering  call */
     registering?: boolean
   }) => Awaitable<string | boolean>
   /**
