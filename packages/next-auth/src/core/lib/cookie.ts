@@ -73,6 +73,14 @@ export function defaultCookies(useSecureCookies: boolean): CookiesOptions {
         secure: useSecureCookies,
       },
     },
+    registering: {
+      name: `${cookiePrefix}next-auth.regitering`,
+      options: {
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+      },
+    },
     csrfToken: {
       // Default to __Host- for CSRF token for additional protection if using useSecureCookies
       // NB: The `__Host-` prefix is stricter than the `__Secure-` prefix.

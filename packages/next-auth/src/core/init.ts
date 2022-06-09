@@ -10,6 +10,7 @@ import * as jwt from "../jwt"
 import { defaultCallbacks } from "./lib/default-callbacks"
 import { createCSRFToken } from "./lib/csrf-token"
 import { createCallbackUrl } from "./lib/callback-url"
+import { createRegistering } from "./lib/registering"
 import { IncomingRequest } from "."
 
 interface InitParams {
@@ -19,7 +20,7 @@ interface InitParams {
   action: InternalOptions["action"]
   /** Callback URL value extracted from the incoming request. */
   callbackUrl?: string
-  registering?: boolean
+  registering?: string
   /** CSRF token value extracted from the incoming request. From body if POST, from query if GET */
   csrfToken?: string
   /** Is the incoming request a POST request? */
@@ -35,7 +36,7 @@ export async function init({
   host,
   cookies: reqCookies,
   callbackUrl: reqCallbackUrl,
-  registering = false,
+  registering: reqRegistering,
   csrfToken: reqCsrfToken,
   isPost,
 }: InitParams): Promise<{
@@ -102,8 +103,7 @@ export async function init({
     // Callback functions
     callbacks: { ...defaultCallbacks, ...userOptions.callbacks },
     logger,
-    callbackUrl: url.origin,
-    registering: Boolean(registering)
+    callbackUrl: url.origin
   }
 
   // Init cookies
@@ -143,6 +143,22 @@ export async function init({
       name: options.cookies.callbackUrl.name,
       value: callbackUrlCookie,
       options: options.cookies.callbackUrl.options,
+    })
+  }
+
+  const { registering, registeringCookie } = await createRegistering({
+    options,
+    cookieValue: reqCookies?.[options.cookies.registering.name],
+    paramValue: reqRegistering,
+  });
+
+  options.registering = (registering == 'true');
+
+  if (registeringCookie) {
+    cookies.push({
+      name: options.cookies.registering.name,
+      value: registeringCookie,
+      options: options.cookies.registering.options,
     })
   }
 

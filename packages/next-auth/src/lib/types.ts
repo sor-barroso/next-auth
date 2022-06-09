@@ -72,7 +72,7 @@ export interface InternalOptions<T extends ProviderType = any> {
   callbacks: CallbacksOptions
   cookies: CookiesOptions
   callbackUrl: string,
-  registering: boolean
+  registering?: boolean
 }
 
 /** @internal */

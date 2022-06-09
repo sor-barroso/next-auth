@@ -280,6 +280,7 @@ export interface CallbacksOptions<
     }
     /** If Credentials provider is used, it contains the user credentials */
     credentials?: Record<string, CredentialInput>
+    registering?: boolean
   }) => Awaitable<string | boolean>
   /**
    * This callback is called anytime the user is redirected to a callback URL (e.g. on signin or signout).
@@ -346,6 +347,7 @@ export interface CookieOption {
 export interface CookiesOptions {
   sessionToken: CookieOption
   callbackUrl: CookieOption
+  registering: CookieOption
   csrfToken: CookieOption
   pkceCodeVerifier: CookieOption
   state: CookieOption
